@@ -41,6 +41,10 @@ class User:
             return jsonify({"error":"email already inserted"}),400
 
         #insert current object to database
-        db.AttendenceSystemCollection.insert_one(user)
         
-        return jsonify(user),200
+        #if insert successfull then retrun this
+        if(db.AttendenceSystemCollection.insert_one(user)):
+            return jsonify(user),200
+    
+        # adding defult error
+        return jsonify({"error":"sigenup fialed"})
