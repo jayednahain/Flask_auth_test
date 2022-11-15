@@ -1,9 +1,12 @@
 from flask import Flask,jsonify,request
+from flask import jsonify
 import uuid
 
 from passlib.hash import pbkdf2_sha256 as enPass
 import pymongo
 from dbConfigaration.mongoConnection import db
+
+
 
 
 
@@ -17,7 +20,6 @@ from dbConfigaration.mongoConnection import db
 # from dbConfigaration.mongoConnection import db
 
 class User:
-
     def signUp(self):
         #create object which represents use
         print("pellaow")
@@ -33,12 +35,12 @@ class User:
 
         #encrypt password
         user['password'] = enPass.encrypt(user['password'])
-        # dataBase.flaskDataBase.insert_one(user)
-
         
+        #check the email address matching
+        if db.AttendenceSystemCollection.find_one({"email":user["email"]}):
+            return jsonify({"error":"email already inserted"}),400
 
-
+        #insert current object to database
         db.AttendenceSystemCollection.insert_one(user)
         
-
         return jsonify(user),200
