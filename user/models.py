@@ -3,9 +3,8 @@ from flask import jsonify
 import uuid
 
 from passlib.hash import pbkdf2_sha256 as enPass
-import pymongo
-from dbConfigaration.mongoConnection import db
-
+# from dbConfigaration.mongoConnection import db
+from dbConfigaration.mongoAtlasOnline import db
 
 
 
